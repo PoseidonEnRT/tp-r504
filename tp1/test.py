@@ -14,5 +14,5 @@ def test_3( ):
 	assert f.puissance(2 ,-3) == 0.125
 
 def test_4( ):
-	assert f.puissance(-2 ,-2) == -0.25
+	assert f.puissance(-2 ,-2) == 0.25
 	assert f.puissance(-2 ,-3) == -0.125
