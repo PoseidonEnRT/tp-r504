@@ -1,5 +1,5 @@
 docker network create tplb
-docker build -t im-nginx-lb
+docker build . -t im-nginx-lb
 mkdir -p shared1
 mkdir -p shared2
 echo "<h1>Hello 1</h1>" > shared1/index.html
