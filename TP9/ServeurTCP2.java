@@ -1,7 +1,7 @@
 import java.io.* ;
 import java.net.* ;
 
-public class ServeurTCP1
+public class ServeurTCP2
 {
     public static void main(String[] args) throws IOException
     {
@@ -15,6 +15,6 @@ public class ServeurTCP1
             System.out.println("Message: " + dIn.readUTF());
             socket.close();
         }    
-        socketserver.close();
+       
     }
 }
