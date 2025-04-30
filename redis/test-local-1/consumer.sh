@@ -1,23 +1,33 @@
 #!/bin/bash
+x=0
+thres=31000
+delay=3
+
 if ! [ $? = 0 ]
 then
   echo "Erreur, pas de connexion avec le serveur redis"
   exit 1
 fi
 
-QUEUE_NAME="data_queue"
-SEUIL=3000
 while :
 do
-  VALUE=$(redis-cli RPOP "$QUEUE_NAME")
-  
-  if [ "$VALUE" != "" ]; then
-    echo "consommateur : Valeur = $VALUE"
-    if [ "$VALUE" -gt "$SEUIL" ]; then
-      echo "consommateur : $VALUE depasse le seuil de $SEUIL"
-      sleep 4
-    fi
-  else
-    sleep 0.1
-  fi
+	ls=$(redis-cli --raw LLEN mafile)
+	echo "iter=$x, taille liste=$ls"
+	if [ $ls -gt 0 ]
+	then
+		value=$(redis-cli --raw RPOP mafile)
+		ls=$(redis-cli --raw LLEN mafile)
+		if ! [ "$value" = "" ]
+		then
+			if [ $value -gt $thres ]
+			then
+				echo "alarme; val=$value"
+				sleep $delay
+			fi
+		fi
+		x=$(( $x+1 ))
+	else
+		echo "liste vide, terminaison"
+		exit 0
+	fi
 done
